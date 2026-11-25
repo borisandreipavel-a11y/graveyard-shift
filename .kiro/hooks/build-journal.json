@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Build Journal",
+      "trigger": "PostTaskExec",
+      "description": "After each spec task finishes, appends one entry to docs/kiro-journal.md recording what was asked, what happened, and anything that went wrong.",
+      "action": {
+        "type": "agent",
+        "prompt": "A spec task just finished. Append exactly one entry to docs/kiro-journal.md — create the file if it does not exist. The entry is one or two lines. Include: date and time (local), the Kiro surface (e.g. Kiro IDE), the Kiro feature used (e.g. Spec / Tasks), the spec name and task ID, a one-line summary of what was asked, a one-line summary of what happened, and — only if relevant — anything that went wrong or had to be redone. Format: a markdown level-3 heading with the date-time, then the detail line(s) as plain prose (no bullets). Append only — never rewrite or reorder existing entries. Touch no file other than docs/kiro-journal.md."
+      }
+    }
+  ]
+}
