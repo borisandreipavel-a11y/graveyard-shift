@@ -39,7 +39,7 @@ Build three packages in dependency order: `packages/engine` (pure TypeScript gam
     - _Requirements: 1.2, 1.3, 1.5_
 
 - [ ] 4. Implement the Loader and Reachability Check
-  - [ ] 4.1 Implement the Loader in `packages/engine/src/loader.ts`
+  - [x] 4.1 Implement the Loader in `packages/engine/src/loader.ts`
     - Export `loadScenario(obj: unknown): LoadResult`
     - Run `ScenarioSchema.safeParse(obj)`, map Zod issues to `SchemaIssue[]` (path via `issue.path.join('.')`, expected type from `issue.expected` or derived from `code`/`message`)
     - Run cross-reference checks after schema passes: every `DoTarget.requires` id exists in `targets.do`; `stop.triggerAction` exists in `targets.do`; `finish.triggerAction` exists in `targets.do`; signal ids unique; no id appears in both look and do lists
@@ -48,36 +48,36 @@ Build three packages in dependency order: `packages/engine` (pure TypeScript gam
     - Return `{ ok: true, scenario }` on success
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 2.1, 2.2_
 
-  - [ ] 4.2 Implement the Reachability Check in `packages/engine/src/reachability.ts`
+  - [x] 4.2 Implement the Reachability Check in `packages/engine/src/reachability.ts`
     - Export `reachabilityCheck(scenario: Scenario): boolean`
     - BFS over done-sets (each state = `Set<string>` of completed do-target ids); edges = every do-target whose `requires ⊆ doneSet` plus `wait` (clock-only, no state change needed here); visited set keyed by sorted done-set string
     - Accept iff a state is reached where `finish.triggerAction` is in the done-set AND the stop trigger is transitively reachable before it (stop trigger must be in done-set before finish trigger is reachable, enforced by the `requires` chain)
     - _Requirements: 2.1, 2.2, 2.3_
 
-  - [ ]* 4.3 Write unit tests for the Loader in `packages/engine/src/__tests__/loader.test.ts`
+  - [x]* 4.3 Write unit tests for the Loader in `packages/engine/src/__tests__/loader.test.ts`
     - Missing required field → error naming path; wrong type → error naming path and expected type; negative trigger minute → error; unresolved `requires` id → reference error; unresolved `stop.triggerAction` → reference error; duplicate signal id → error; valid scenario → ok
     - _Requirements: 1.2, 1.3, 1.4, 1.5_
 
-  - [ ]* 4.4 Write unit tests for the Reachability Check in `packages/engine/src/__tests__/reachability.test.ts`
+  - [x]* 4.4 Write unit tests for the Reachability Check in `packages/engine/src/__tests__/reachability.test.ts`
     - Simple linear chain (look → do → finish) → reachable; dead-end only graph → unreachable; isolated dead-end branch + valid path → reachable; scenario with no finish trigger at all → unreachable
     - _Requirements: 2.1, 2.2, 2.3_
 
-- [ ] 5. Checkpoint — schema, loader, and reachability
+- [x] 5. Checkpoint — schema, loader, and reachability
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 6. Implement Session creation
-  - [ ] 6.1 Implement `createSession` in `packages/engine/src/session.ts`
+- [x] 6. Implement Session creation
+  - [x] 6.1 Implement `createSession` in `packages/engine/src/session.ts`
     - Export `createSession(scenario: Scenario, participants: Participant[]): Session | { error: 'no-participants' }`
     - Return `{ error: 'no-participants' }` when the array is empty (Requirement 3.1)
     - Initial `Session`: `clock: 0`, `outageStopped: false`, `incidentFinished: false`, `stoppedAt: null`, `finishedAt: null`, `actionLog: []`, `seenSignals: []`, `firedTimeTriggers: []`, `doneTargets: []`, `lookedTargets: []`, `pendingEffects: []`, `flags: {}`
     - _Requirements: 3.1, 3.2, 3.3, 6.1_
 
-  - [ ]* 6.2 Write unit tests for session creation in `packages/engine/src/__tests__/session.test.ts`
+  - [x]* 6.2 Write unit tests for session creation in `packages/engine/src/__tests__/session.test.ts`
     - Empty participant list → error; single participant → ok, all initial fields correct; multiple participants → ok
     - _Requirements: 3.1, 3.3_
 
-- [ ] 7. Implement the clock and delayed-effect resolution
-  - [ ] 7.1 Implement clock advancement in `packages/engine/src/clock.ts`
+- [x] 7. Implement the clock and delayed-effect resolution
+  - [x] 7.1 Implement clock advancement in `packages/engine/src/clock.ts`
     - Export `advanceClock(session: Session, minutes: number): { session: Session; events: Event[] }`
     - After advancing `clock += minutes`, fire time-triggered signals (arrivesAtMinute ≤ newClock, not in `firedTimeTriggers`) in ascending minute order — emit `{ kind: 'signal', signalId, text }` events and add to `firedTimeTriggers`
     - Fire landed pending effects (landsAtMinute ≤ newClock) sorted by `(landsAtMinute, sequence)` — apply each exactly once, remove from `pendingEffects`
@@ -85,12 +85,12 @@ Build three packages in dependency order: `packages/engine` (pure TypeScript gam
     - Return new immutable session and accumulated events
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 6.9, 7.1, 7.5_
 
-  - [ ]* 7.2 Write unit tests for clock and effects in `packages/engine/src/__tests__/clock.test.ts`
+  - [x]* 7.2 Write unit tests for clock and effects in `packages/engine/src/__tests__/clock.test.ts`
     - Advance by 0 → clock unchanged, no events; advance past single time-trigger → signal event; advance past multiple triggers in one step → events in ascending minute order; each trigger fires only once across multiple advances; delayed effect does not fire at action time, fires when clock reaches landing minute; two effects same landing minute → applied in sequence order
     - _Requirements: 6.2, 6.3, 6.4, 6.5, 6.7, 6.8, 6.9_
 
-- [ ] 8. Implement action dispatch
-  - [ ] 8.1 Implement `applyAction` in `packages/engine/src/dispatch.ts`
+- [x] 8. Implement action dispatch
+  - [x] 8.1 Implement `applyAction` in `packages/engine/src/dispatch.ts`
     - Export `applyAction(session: Session, action: Action): { session: Session; events: Event[] }`
     - Follow the dispatch flowchart from the design exactly:
       1. Unknown participant → `{ kind: 'error' }` event, session unchanged
@@ -107,11 +107,11 @@ Build three packages in dependency order: `packages/engine` (pure TypeScript gam
     - Return new immutable session (use object spread / structural copy throughout)
     - _Requirements: 3.2, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 5.1, 5.2, 5.3, 5.4, 6.6, 7.2, 7.3, 7.4_
 
-  - [ ]* 8.2 Write unit tests for dispatch in `packages/engine/src/__tests__/dispatch.test.ts`
+  - [x]* 8.2 Write unit tests for dispatch in `packages/engine/src/__tests__/dispatch.test.ts`
     - `help` → lists targets, clock unchanged; `wait` → clock advances by wait cost; `look` known target → description returned, clock advances, target added to lookedTargets; `look` same target again → repeat description used; `do` with met preconditions → outcome applied, doneTargets updated; `do` with unmet preconditions → blocked event, only blocked cost paid, flags unchanged; `do` dead-end → event returned, no flags set; `do` delayed → pending effect scheduled, no immediate flag; `do` finish before outageStopped is true → blocked event (not not-understood); action after finish → `finished-already`; unknown participant → error event, session unchanged
     - _Requirements: 3.2, 4.1–4.6, 5.1–5.4, 7.2, 7.3, 7.4_
 
-- [ ] 9. Checkpoint — session, clock, and dispatch
+- [x] 9. Checkpoint — session, clock, and dispatch
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 10. Implement the Debrief

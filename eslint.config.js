@@ -16,13 +16,23 @@ export default tseslint.config(
       },
     },
     rules: {
-      // Ban real-clock and randomness globals
+      // Ban real-clock, randomness, and I/O globals
       'no-restricted-globals': [
         'error',
         {
           name: 'Date',
           message:
             'The engine must not read the real clock. Advance time only through the incident clock.',
+        },
+        {
+          name: 'console',
+          message:
+            'The engine produces no output. Printing belongs to the runner.',
+        },
+        {
+          name: 'process',
+          message:
+            'The engine has no access to the process environment. I/O belongs to the runner.',
         },
       ],
       // Math.random is a property access, not a global identifier,

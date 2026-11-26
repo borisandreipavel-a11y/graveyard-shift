@@ -1,5 +1,9 @@
 // Core type definitions for the pure engine.
 // The engine performs no I/O of any kind: these are plain data shapes.
+//
+// Scenario is defined once in schema.ts (inferred from the Zod schema) and
+// re-exported here so the rest of the engine imports from a single location.
+export type { Scenario } from './schema.js';
 
 // --- Actions ---
 
@@ -74,53 +78,6 @@ export type RealTimelineEntry = {
   utcTimestamp: string;
   description: string;
   reconstruction?: boolean;
-};
-
-export type Scenario = {
-  /** e.g. 'cloudflare-2019-07-02' */
-  id: string;
-  title: string;
-  source: {
-    /** postmortem URL */
-    url: string;
-    title: string;
-  };
-  /** debrief context sentence (Requirement 12.2) */
-  reconstructionNote: string;
-  /** ids of signals present at clock 0 */
-  initialSignals: string[];
-  /** all signals including time-triggered ones */
-  signals: Signal[];
-  targets: {
-    look: LookTarget[];
-    do: DoTarget[];
-  };
-  stop: {
-    /** do-target id that triggers the outage stop */
-    triggerAction: string;
-  };
-  finish: {
-    /** do-target id that finishes the incident */
-    triggerAction: string;
-  };
-  costs: {
-    /** minutes */
-    wait: number;
-    /** minutes for blocked attempts */
-    blocked: number;
-  };
-  /** true: all action costs are reconstructions */
-  costsAreEstimates: boolean;
-  sourceDurations: {
-    /** minutes, from source */
-    pageToIdentified: number;
-    pageToSwitchOff: number;
-    pageToRecovery: number;
-    switchOffToWafRestored: number;
-    /** minutes, stated in source */
-    outageFromDeploy: number;
-  };
-  realTimeline: RealTimelineEntry[];
 };
 
 // --- Session ---
