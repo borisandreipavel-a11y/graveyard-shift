@@ -1,0 +1,50 @@
+{
+  "pbtResults": {
+    "16.9 Write property test P8 (flag monotone invariants) in `packages/engine/src/__tests__/session.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1795681403467
+    },
+    "16.12 Write property test P11 (determinism) in `packages/engine/src/__tests__/determinism.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1795681824218
+    }
+  },
+  "executionHistory": {
+    "16.1 Create fast-check arbitraries in `packages/engine/src/__tests__/arbitraries.ts`": [
+      {
+        "executionId": "4360f63e-f3ce-470c-8f42-1f4ed2687a76",
+        "chatSessionId": "sess_e20c4a4c-dd29-4898-a8d5-b8ef379b46b1",
+        "timestamp": 1795681088622
+      },
+      {
+        "executionId": "4360f63e-f3ce-470c-8f42-1f4ed2687a76",
+        "chatSessionId": "sess_e20c4a4c-dd29-4898-a8d5-b8ef379b46b1",
+        "timestamp": 1795681238224
+      }
+    ],
+    "16.9 Write property test P8 (flag monotone invariants) in `packages/engine/src/__tests__/session.property.test.ts`": [
+      {
+        "executionId": "7db71e1c-3d9c-4197-85cd-f938bc22fd1b",
+        "chatSessionId": "sess_6c85463b-3618-4759-a98f-2d3ef511105e",
+        "timestamp": 1795681278684
+      },
+      {
+        "executionId": "7db71e1c-3d9c-4197-85cd-f938bc22fd1b",
+        "chatSessionId": "sess_6c85463b-3618-4759-a98f-2d3ef511105e",
+        "timestamp": 1795681713907
+      }
+    ],
+    "16.12 Write property test P11 (determinism) in `packages/engine/src/__tests__/determinism.property.test.ts`": [
+      {
+        "executionId": "5823e78e-ce9b-4f25-acfb-c0d93e04ee0e",
+        "chatSessionId": "sess_91a856fe-e5b3-4c9b-bc1b-c71873ec5332",
+        "timestamp": 1795681778707
+      },
+      {
+        "executionId": "5823e78e-ce9b-4f25-acfb-c0d93e04ee0e",
+        "chatSessionId": "sess_91a856fe-e5b3-4c9b-bc1b-c71873ec5332",
+        "timestamp": 1795681831447
+      }
+    ]
+  }
+}

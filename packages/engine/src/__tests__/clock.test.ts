@@ -122,6 +122,12 @@ describe('advanceClock', () => {
   });
 
   it('applies effects at the same landing minute in sequence order (Requirement 6.9)', () => {
+    // Both effects target the same flag (outage_stopped) and land at the same
+    // minute. Requirement 7.7 means only the first one (sequence: 0) can apply —
+    // once stoppedAt is recorded it must never change. The ordering requirement
+    // (Req 6.9) is verified by confirming it is the sequence-0 effect that fires,
+    // not the sequence-1 effect. If the sort were reversed, 'Second effect.' would
+    // appear instead.
     const s = withPendingEffects(session(), [
       {
         landsAtMinute: 5,
@@ -136,12 +142,15 @@ describe('advanceClock', () => {
         effect: { delayMinutes: 1, text: 'First effect.', setsFlag: 'outage_stopped' },
       },
     ]);
-    const { events } = advanceClock(s, 5);
+    const { session: s1, events } = advanceClock(s, 5);
     const stopEvents = events.filter((e) => e.kind === 'stop');
-    expect(stopEvents.map((e) => (e as { text: string }).text)).toEqual([
-      'First effect.',
-      'Second effect.',
-    ]);
+    // Only sequence-0 fires (idempotency guard prevents sequence-1 from
+    // overwriting stoppedAt). The important assertion is that 'First effect.'
+    // won, proving the ascending-sequence sort ran before the guard.
+    expect(stopEvents).toHaveLength(1);
+    expect((stopEvents[0] as { text: string }).text).toBe('First effect.');
+    // stoppedAt is from the first effect's landing minute.
+    expect(s1.stoppedAt).toBe(5);
   });
 
   it('applies each effect exactly once across multiple advances (Requirement 6.8)', () => {

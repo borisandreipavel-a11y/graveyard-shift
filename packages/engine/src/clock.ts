@@ -63,9 +63,14 @@ export function advanceClock(
 
   for (const pe of landedEffects) {
     if (pe.effect.setsFlag === 'outage_stopped') {
-      outageStopped = true;
-      stoppedAt = pe.landsAtMinute; // Requirement 7.5
-      events.push({ kind: 'stop', text: pe.effect.text, clock: pe.landsAtMinute });
+      if (!outageStopped) {
+        // Only the first landing sets outageStopped and records stoppedAt
+        // (Requirement 7.7: stoppedAt must never change once recorded).
+        outageStopped = true;
+        stoppedAt = pe.landsAtMinute; // Requirement 7.5
+        events.push({ kind: 'stop', text: pe.effect.text, clock: pe.landsAtMinute });
+      }
+      // Subsequent landings of the same flag are silently ignored.
     }
   }
 

@@ -51,6 +51,12 @@ export const DoTargetSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
   description: z.string().min(1),
+  /**
+   * Optional message shown to the player when this action is blocked by
+   * unmet preconditions. When absent, dispatch falls back to a generic
+   * message that does not expose internal target ids.
+   */
+  blockedMessage: z.string().min(1).optional(),
   cost: z.number().int().min(0),
   requires: z.array(z.string().min(1)).optional(),
   outcome: DoTargetOutcomeSchema,

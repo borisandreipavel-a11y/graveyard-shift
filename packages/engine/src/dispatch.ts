@@ -126,9 +126,13 @@ export function applyAction(
     const finishBlocked = isFinishAction && !session.outageStopped;
 
     if (unmetRequires.length > 0 || finishBlocked) {
-      const message = finishBlocked
-        ? 'The outage has not been stopped yet. Stop the outage first.'
-        : `Blocked: you need to complete '${unmetRequires.join("', '")}' first.`;
+      // A scenario-defined blockedMessage wins for any block reason;
+      // otherwise fall back to a generic message that names no internal ids.
+      const message =
+        target.blockedMessage ??
+        (finishBlocked
+          ? 'The outage has not been stopped yet. Stop the outage first.'
+          : "You can't do that yet. Check what else needs to happen first.");
       const { session: s1, events: clockEvents } = advanceClock(
         session,
         scenario.costs.blocked,

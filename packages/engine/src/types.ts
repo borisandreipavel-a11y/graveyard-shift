@@ -59,6 +59,12 @@ export type DoTarget = {
   name: string;
   /** outcome text on success */
   description: string;
+  /**
+   * Optional message shown to the player when this action is blocked by
+   * unmet preconditions. When absent, dispatch falls back to a generic
+   * message that does not expose internal target ids.
+   */
+  blockedMessage?: string;
   /** minutes of Incident_Clock (Requirement 12.5) */
   cost: number;
   /** ids of do-targets that must be done first */

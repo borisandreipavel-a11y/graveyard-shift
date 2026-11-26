@@ -179,6 +179,32 @@ describe('do action — blocked', () => {
     expect(s1.outageStopped).toEqual(s.outageStopped);
     expect(s1.incidentFinished).toEqual(s.incidentFinished);
   });
+
+  it('uses a custom blockedMessage from the target when present', () => {
+    const s = session({
+      do: [
+        doTarget({ id: 'terminate', outcome: { kind: 'delayed', effect: { delayMinutes: 1, text: 'Stop.', setsFlag: 'outage_stopped' } } }),
+        doTarget({
+          id: 're-enable',
+          requires: ['terminate'],
+          blockedMessage: 'You need to terminate the WAF globally first.',
+          outcome: { kind: 'finish' },
+        }),
+      ],
+    });
+    const { events } = applyAction(s, { kind: 'do', target: 're-enable' });
+    const blocked = events[0] as Extract<typeof events[number], { kind: 'blocked' }>;
+    expect(blocked.message).toBe('You need to terminate the WAF globally first.');
+  });
+
+  it('generic fallback message does not contain internal target ids', () => {
+    const s = session();
+    // 're-enable' has no blockedMessage; default helpers do not set one.
+    const { events } = applyAction(s, { kind: 'do', target: 're-enable' });
+    const blocked = events[0] as Extract<typeof events[number], { kind: 'blocked' }>;
+    expect(blocked.message).not.toContain('terminate');
+    expect(blocked.message).not.toContain('re-enable');
+  });
 });
 
 // ---------------------------------------------------------------------------

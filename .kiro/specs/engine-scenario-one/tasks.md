@@ -188,7 +188,7 @@ Build three packages in dependency order: `packages/engine` (pure TypeScript gam
     - _Requirements: 10.2–10.8_
 
 - [ ] 16. Write property-based tests for the engine
-  - [ ] 16.1 Create fast-check arbitraries in `packages/engine/src/__tests__/arbitraries.ts`
+  - [x] 16.1 Create fast-check arbitraries in `packages/engine/src/__tests__/arbitraries.ts`
     - `participantArb`, `lookTargetArb`, `doTargetArb`, `validScenarioArb` (always produces a scenario that passes `loadScenario`), `actionArb(scenario)`, `actionSequenceArb(scenario, maxLen)`
     - _Requirements: 11.1, 11.2_
 
@@ -220,7 +220,7 @@ Build three packages in dependency order: `packages/engine` (pure TypeScript gam
     - **Property 7: Delayed effects are not applied at action time and are applied exactly once at their landing minute**
     - **Validates: Requirements 6.6, 6.7, 6.8, 7.1**
 
-  - [ ] 16.9 Write property test P8 (flag monotone invariants) in `packages/engine/src/__tests__/session.property.test.ts`
+  - [x] 16.9 Write property test P8 (flag monotone invariants) in `packages/engine/src/__tests__/session.property.test.ts`
     - **Property 8: Session flag monotone invariants**
     - **Validates: Requirements 7.3, 7.4, 7.5, 7.6, 7.7**
 
