@@ -1,0 +1,10 @@
+{
+  "name": "@graveyard-shift/scenarios",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "echo 'No build step for scenarios package'",
+    "test": "echo 'No tests in scenarios package'"
+  }
+}

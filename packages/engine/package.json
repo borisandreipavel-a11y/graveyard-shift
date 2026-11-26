@@ -1,0 +1,25 @@
+{
+  "name": "@graveyard-shift/engine",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "eslint src --max-warnings 0",
+    "test": "pnpm lint && vitest run"
+  },
+  "dependencies": {
+    "zod": "3.25.49"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "3.2.4",
+    "fast-check": "3.23.2",
+    "vitest": "3.2.4"
+  }
+}

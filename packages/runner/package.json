@@ -1,0 +1,20 @@
+{
+  "name": "@graveyard-shift/runner",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "graveyard-shift": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@graveyard-shift/engine": "workspace:*",
+    "yaml": "2.8.0"
+  },
+  "devDependencies": {
+    "vitest": "3.2.4"
+  }
+}

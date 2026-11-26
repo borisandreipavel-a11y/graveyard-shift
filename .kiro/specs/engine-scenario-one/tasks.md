@@ -6,7 +6,7 @@ Build three packages in dependency order: `packages/engine` (pure TypeScript gam
 
 ## Tasks
 
-- [ ] 1. Initialise the pnpm workspace and package scaffolding
+- [x] 1. Initialise the pnpm workspace and package scaffolding
   - Create `pnpm-workspace.yaml` at the repo root listing `packages/*`
   - Create `packages/engine/package.json` (name `@graveyard-shift/engine`, `"type": "module"`, strict TypeScript, zod as dependency, vitest + fast-check as dev dependencies)
   - Create `packages/scenarios/package.json` (name `@graveyard-shift/scenarios`, data-only, no runtime deps)

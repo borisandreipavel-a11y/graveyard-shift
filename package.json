@@ -1,0 +1,15 @@
+{
+  "name": "graveyard-shift",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint"
+  },
+  "allowBuild": [
+    "esbuild"
+  ],
+  "devDependencies": {
+    "typescript": "5.8.3"
+  }
+}
