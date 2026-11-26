@@ -15,7 +15,7 @@ Build three packages in dependency order: `packages/engine` (pure TypeScript gam
   - Create `packages/engine/vitest.config.ts`
   - _Requirements: 10.1_
 
-- [ ] 2. Add ESLint purity guardrail for the engine package
+- [x] 2. Add ESLint purity guardrail for the engine package
   - Install ESLint and configure a root `.eslintrc` (or `eslint.config.js`) for the workspace
   - Add `no-restricted-globals` rule banning `Date` and `Math.random` in `packages/engine/**`
   - Add `no-restricted-imports` rule banning `fs`, `node:fs`, and any `node:*` import in `packages/engine/**`

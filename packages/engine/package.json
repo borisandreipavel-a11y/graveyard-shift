@@ -11,8 +11,8 @@
   },
   "scripts": {
     "build": "tsc --noEmit",
-    "lint": "eslint src --max-warnings 0",
-    "test": "pnpm lint && vitest run"
+    "lint": "eslint . --max-warnings 0",
+    "test": "pnpm run lint && vitest run"
   },
   "dependencies": {
     "zod": "3.25.49"
