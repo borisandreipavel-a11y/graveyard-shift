@@ -23,18 +23,18 @@ Build three packages in dependency order: `packages/engine` (pure TypeScript gam
   - Confirm the rule fires: add a minimal negative test (a file importing `fs` inside engine should produce a lint error)
   - _Requirements: 10.1_
 
-- [ ] 3. Define core TypeScript types and the Zod schema
-  - [ ] 3.1 Write all type definitions in `packages/engine/src/types.ts`
+- [x] 3. Define core TypeScript types and the Zod schema
+  - [x] 3.1 Write all type definitions in `packages/engine/src/types.ts`
     - Define `ActionKind`, `Action`, `Participant`, `Signal`, `LookTarget`, `DoTarget`, `DelayedEffectSpec`, `RealTimelineEntry`, `Scenario`, `Session`, `ActionLogEntry`, `PendingEffect`, `Event`, `Debrief`, `ParsedCommand`, `LoadResult`, `LoadError`, `SchemaIssue` exactly as specified in the design's Data Models section
     - _Requirements: 1.1, 3.1, 3.2, 3.3, 4.1, 6.1, 7.5, 7.6, 8.1_
 
-  - [ ] 3.2 Write the Zod schema in `packages/engine/src/schema.ts`
+  - [x] 3.2 Write the Zod schema in `packages/engine/src/schema.ts`
     - Implement `SignalSchema`, `LookTargetSchema`, `DoTargetSchema` (with the `outcome` discriminated union covering all six outcome kinds), `RealTimelineEntrySchema`, `ScenarioSchema`
     - Use `z.number().int().min(0)` for all minute fields (rejects negatives per Requirement 1.5)
     - Export `ScenarioSchema` and re-export `Scenario` as `z.infer<typeof ScenarioSchema>`
     - _Requirements: 1.1, 1.2, 1.3, 1.5_
 
-  - [ ]* 3.3 Write unit tests for the Zod schema in `packages/engine/src/__tests__/schema.test.ts`
+  - [x]* 3.3 Write unit tests for the Zod schema in `packages/engine/src/__tests__/schema.test.ts`
     - Test each required field missing → error; wrong type per field → error; negative minute → error; valid minimal object → ok
     - _Requirements: 1.2, 1.3, 1.5_
 
